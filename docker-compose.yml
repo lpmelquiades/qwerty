@@ -18,11 +18,14 @@ services:
       - ./next.config.js:/var/www/next.config.js
       - ./__tests__:/var/www/__tests__
       - ./vitest.config.ts:/var/www/vitest.config.ts
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:12
     container_name: postgres
-    network_mode: "host"
+    ports:
+      - "5432:5432"
     volumes:
       - ~/volume/db/postgresql:/var/lib/postgresql/data
     environment:

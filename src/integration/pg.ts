@@ -4,7 +4,7 @@ export class PgClient {
     
     private client: Sequelize
     constructor() {
-        this.client = new Sequelize('postgres://postgres:postgrespassword@localhost:5432/postgres')
+        this.client = new Sequelize('postgres://postgres:postgrespassword@postgres:5432/postgres')
     }
 
     public async conn(): Promise<any>
