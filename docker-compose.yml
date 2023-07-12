@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+
+  qwerty:
+    build:
+      context: .
+      target: dev
+    container_name: qwerty
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./public:/var/www/public
+      - ./src:/var/www/src
+      - ./node_modules:/var/www/node_modules
+      - ./package.json:/var/www/package.json
+      - ./package-lock.json:/var/www/package-lock.json
+      - ./next.config.js:/var/www/next.config.js
+      - ./__tests__:/var/www/__tests__
+      - ./vitest.config.ts:/var/www/vitest.config.ts
+
+  postgres:
+    image: postgres:12
+    container_name: postgres
+    network_mode: "host"
+    volumes:
+      - ~/volume/db/postgresql:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+
+
