@@ -5,14 +5,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import * as yup from 'yup'
 
-const pgClient =  new PgClient()
-pgClient.conn()
+
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<string>
 ) {
   try {
+    let pgClient =  new PgClient()
+    await pgClient.test()
+    await pgClient.close()
     res.setHeader('Content-Type', 'application/json')
     res.status(200).send(JSON.stringify({messsage: "hello world"}))
     return
