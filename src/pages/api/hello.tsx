@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { PgClient } from '@/integration/pg'
+import { ORM } from '@/integration/orm'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 
@@ -12,9 +12,13 @@ export default async function handler(
   res: NextApiResponse<string>
 ) {
   try {
-    let pgClient =  new PgClient()
-    await pgClient.test()
-    await pgClient.close()
+    let orm =  new ORM()
+    await orm.test()
+    await orm.sync()
+    // await orm.user.create({firstName: 'john', lastName: 'paul'})
+    let abc = await orm.user.findByPk(2)
+    console.log(abc.toJSON())  
+    await orm.close()
     res.setHeader('Content-Type', 'application/json')
     res.status(200).send(JSON.stringify({messsage: "hello world"}))
     return
